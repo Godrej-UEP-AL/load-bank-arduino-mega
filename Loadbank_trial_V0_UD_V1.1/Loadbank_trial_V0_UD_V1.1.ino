@@ -282,11 +282,14 @@ char _GenStr[_Seq][5]={0};
     {
      lcd.clear();
      lcd.setCursor(0, 0);
-     lcd.print("LOAD:");
+     lcd.print("LD:");
+     
      lcd.setCursor(0, 1);
-     lcd.print("CYCLE:");
-     lcd.setCursor(6, 1);
+     lcd.print("CY:");
+     
+     lcd.setCursor(3, 1);
      lcd.print(_executeLoop);
+     
      Serial.println(_Seq);
      int _PassOn = 0;
      char _LoadVal[10] = {0};
@@ -325,6 +328,7 @@ char _GenStr[_Seq][5]={0};
     Serial.println(_NumberOfRelays);
     Serial.println(_LoadVal);
     unsigned long _delay = atol(_TimeVal);
+    unsigned int _timeInSec = _delay/1000;
     Serial.println(_delay);
 
     
@@ -333,8 +337,14 @@ char _GenStr[_Seq][5]={0};
             //attachInterrupt(digitalPinToInterrupt(_stop),_stopISR,LOW);
     
     int _load1000, _load200, _load100, _load60, _load50, _load40, _load20, load10;
-    lcd.setCursor(5, 0);
+    lcd.setCursor(3, 0);
     lcd.print(_NumberOfRelays);
+    lcd.print("W");
+
+    lcd.setCursor(10, 0);
+    lcd.print("T:");
+    lcd.print(_timeInSec);
+    
     digitalWrite(42,HIGH);
 //    PORTA = 0xFF;
 //    PORTC = 0xFF;
@@ -559,6 +569,10 @@ char _GenStr[_Seq][5]={0};
       if(ExecuteKey_pause == true)
       {
         ExecuteKey_pause = false;
+        lcd.clear();
+        lcd.setCursor(4,0);
+        lcd.print("Paused!");
+
         Serial.println("pause key detected, press resume or STOP key");
         while(!ExecuteKey_resume)
         {
@@ -566,7 +580,11 @@ char _GenStr[_Seq][5]={0};
           if(ExecuteKey_stop)
           {
             ExecuteKey_stop = false;
+            lcd.clear();
+            lcd.setCursor(2,0);
+            lcd.print("Stop Executed");
             Serial.println("Stop Executed");
+            
             _executeLoop = 0;
             _executeSequence = 0;
             ExecuteKey_start = false;
@@ -581,13 +599,20 @@ char _GenStr[_Seq][5]={0};
         if(ExecuteKey_resume)
         {
             ExecuteKey_resume = false;
+            lcd.clear();
+            lcd.setCursor(4,0);
+            lcd.print("Resumed!");
             Serial.println("Resumed");
         }
       }
       else if(ExecuteKey_stop)
       {
         ExecuteKey_stop = false;
+        lcd.clear();
+        lcd.setCursor(2,0);
+        lcd.print("Stop Executed");
         Serial.println("Stop Executed");
+        
         _state = 0;
         _executeLoop = 0;
         _executeSequence = 0;
@@ -622,8 +647,8 @@ switch (_state)
   lcd.clear();
   lcd.setCursor(1, 0);
   lcd.print("Load Simulator");
-  lcd.setCursor(3, 1);
-  lcd.print("Godrej UEP"); 
+  lcd.setCursor(5, 1);
+  lcd.print("GODREJ"); 
   Serial.println("initialization done.");
   dataFile = SD.open("DATA.csv", FILE_READ);
   if (dataFile) 
@@ -670,6 +695,7 @@ switch (_state)
     {
       ExecuteKey_start = false;
       _state = 2;
+
       Serial.println("start key detected");
     }
     break;
