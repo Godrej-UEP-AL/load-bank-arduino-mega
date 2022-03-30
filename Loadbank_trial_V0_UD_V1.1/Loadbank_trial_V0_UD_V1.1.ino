@@ -346,16 +346,17 @@ char _GenStr[_Seq][5]={0};
     lcd.print(_timeInSec);
     
     digitalWrite(42,HIGH);
+    
 //    PORTA = 0xFF;
 //    PORTC = 0xFF;
 //    PORTD = 0xFF;
 //    PORTG = 0xFF;
     
     _load1000 = _load200 = _load100 = _load60 = _load50 = _load40 = _load20 = load10 = 0;
-     unsigned char _portA = 0;
+ 
     if(_NumberOfRelays <= 0)
     {
-    
+      delay(500);
       digitalWrite(42,LOW);
       lcd.setCursor(0, 0);
       lcd.print("Charging ON");
