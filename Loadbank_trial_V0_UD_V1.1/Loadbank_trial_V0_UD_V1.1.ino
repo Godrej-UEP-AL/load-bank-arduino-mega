@@ -203,7 +203,7 @@ void setup()
 
   for(unsigned int pin = 22; pin < 44; pin ++){
     pinMode(pin, OUTPUT);
-    digitalWrite(pin, HIGH);
+    digitalWrite(pin, LOW);
   }    
 }
 
@@ -345,7 +345,7 @@ char _GenStr[_Seq][5]={0};
     lcd.print("T:");
     lcd.print(_timeInSec);
     
-    digitalWrite(42,HIGH);
+    digitalWrite(42,LOW);
     
 //    PORTA = 0xFF;
 //    PORTC = 0xFF;
@@ -357,7 +357,7 @@ char _GenStr[_Seq][5]={0};
     if(_NumberOfRelays <= 0)
     {
       delay(500);
-      digitalWrite(42,LOW);
+      digitalWrite(42,HIGH);
       lcd.setCursor(0, 0);
       lcd.print("Charging ON");
       Serial.println("Charging ON");
@@ -372,31 +372,32 @@ char _GenStr[_Seq][5]={0};
         switch(_load1000)
         {
         case 1: 
-        PORTA = (PORTA | 0x0F)& B11111110;
-//        PORTA &= B11111110;
+//        PORTA = (PORTA | 0x0F)& B11111110;
+        PORTA = (PORTA & 0xF0)| B00000001;
         Serial.println("1 OF 1000W ON");
         break;
 
         case 2:
-        PORTA = (PORTA | 0x0F)& B11111100;
-//        PORTA &= B11111100; //22,23 ON
+//        PORTA = (PORTA | 0x0F)& B11111100;
+        PORTA = (PORTA & 0xF0)| B00000011;
         Serial.println("2 OF 1000W ON");
         break;
 
         case 3:
-        PORTA = (PORTA | 0x0F)& B1111000;
-//        PORTA &= B1111000; //22,23,24 ON
+//        PORTA = (PORTA | 0x0F)& B11111000;
+        PORTA = (PORTA & 0xF0)| B00000111;
         Serial.println("3 OF 1000W");
         break;
 
         case 4:
-        PORTA = (PORTA | 0x0F)& B11110000;
-//        PORTA &= B11110000;
+//        PORTA = (PORTA | 0x0F)& B11110000;
+        PORTA = (PORTA & 0xF0)| B00001111;
         Serial.println("4 OF 1000W");
         break;
 
         default:
-        PORTA |= B00001111;
+//        PORTA |= B00001111;
+        PORTA &= B11110000;
         break;
         }
     }
@@ -408,31 +409,32 @@ char _GenStr[_Seq][5]={0};
         switch(_load200)
         {
         case 1: 
-        PORTA = (PORTA | 0xF0)& B11101111;
-//        PORTA &= B11101111; //26 ON
+//        PORTA = (PORTA | 0xF0)& B11101111;
+        PORTA = (PORTA & 0x0F)| B00010000;  
         Serial.println("1 OF 200W ON");
         break;
 
         case 2:
-        PORTA = (PORTA | 0xF0)& B11001111;
-//        PORTA &= B11001111; //26,27 ON
+//        PORTA = (PORTA | 0xF0)& B11001111;
+        PORTA = (PORTA & 0x0F)| B00110000;
         Serial.println("2 OF 200W ON");
         break;
 
         case 3:
-        PORTA = (PORTA | 0xF0)& B10001111;
-//        PORTA &= B10001111; //26,27,28 ON
+//        PORTA = (PORTA | 0xF0)& B10001111;
+        PORTA = (PORTA & 0x0F)| B01110000;
         Serial.println("3 OF 200W ON");
         break;
 
         case 4:
-        PORTA = (PORTA | 0xF0)& B00001111;
-//        PORTA &= B00001111;
+//        PORTA = (PORTA | 0xF0)& B00001111;
+        PORTA = (PORTA & 0x0F)| B11110000;
         Serial.println("4 OF 200W ON");
         break;
 
         default:
-        PORTA |= B11110000;
+//        PORTA |= B11110000;
+        PORTA &= B00001111;
         break;
         }
     }
@@ -445,32 +447,33 @@ char _GenStr[_Seq][5]={0};
         {
         case 1: 
         {
-          PORTC = (PORTC | 0x0F)& B11111110;
-//        PORTC &= B11111110; //30 ON
+//        PORTC = (PORTC | 0x0F)& B11111110;
+          PORTC = (PORTC & 0xF0)| B00000001;
         Serial.println("1 OF 40W ON");
         }
         break;
         
         case 2:
-        PORTC = (PORTC | 0x0F)& B11111100;        
-//        PORTC &= B11111100; //30,31  ON
+//      PORTC = (PORTC | 0x0F)& B11111100;
+        PORTC = (PORTC & 0xF0)| B00000011;        
         Serial.println("2 OF 40W ON");
         break;
 
         case 3:
-        PORTC = (PORTC | 0x0F)& B11111000; 
-//        PORTC &= B11111000; //30,31,32 ON
+//        PORTC = (PORTC | 0x0F)& B11111000; 
+        PORTC = (PORTC & 0x0F)| B00000111;
         Serial.println("3 OF 40W ON");
         break;
 
         case 4:
-        PORTC = (PORTC | 0x0F)& B11110000; 
-//        PORTC &= B11110000; //30,31,32,33 ON
+//        PORTC = (PORTC | 0x0F)& B11110000; 
+        PORTC = (PORTC & 0x0F)| B00001111; 
         Serial.println("4 OF 40W ON");
         break;
 
         default:
-        PORTC |= B00001111;
+//        PORTC |= B00001111;
+        PORTC &= B11110000;
         break;
       }
     }
@@ -482,31 +485,32 @@ char _GenStr[_Seq][5]={0};
         switch(_load20)
         {
         case 1: 
-        PORTC = (PORTC | 0xF0)& B11101111;
-//        PORTC &= B11101111; //34 ON
+//        PORTC = (PORTC | 0xF0)& B11101111;
+        PORTC = (PORTC & 0xF0)| B00010000;
         Serial.println("1 OF 20W ON");
         break;
 
         case 2:
-        PORTC = (PORTC | 0xF0)& B11001111;
-//        PORTC &= B11001111; //34,35 ON
+//        PORTC = (PORTC | 0xF0)& B11001111;
+        PORTC = (PORTC & 0xF0)| B00110000;
         Serial.println("2 OF 20W ON");
         break;
 
         case 3:
-        PORTC = (PORTC | 0xF0)& B10001111;
-//        PORTC &= B10001111; //34,35,36 ON
+//        PORTC = (PORTC | 0xF0)& B10001111;
+        PORTC = (PORTC & 0xF0)| B01110000;
         Serial.println("3 OF 20W ON");
         break;
 
         case 4:
-        PORTC = (PORTC | 0xF0)& B00001111;
-//        PORTC &= B00001111; //34,35,36,37 ON
+//        PORTC = (PORTC | 0xF0)& B00001111;
+        PORTC = (PORTC & 0xF0)| B11110000;
         Serial.println("4 OF 20W ON");
         break;
 
         default:
-        PORTC |= B11110000;
+//        PORTC |= B11110000;
+        PORTC &= B00001111;
         break;
         }
         
@@ -519,38 +523,40 @@ char _GenStr[_Seq][5]={0};
         switch(load10)
         {
         case 1:
-        PORTD = (PORTD | 0xF0)& B01111111; 
-//        PORTD &= B01111111; //38 ON
+//        PORTD = (PORTD | 0xF0)& B01111111;
+        PORTD = (PORTD & 0x0F)| B10000000; 
         Serial.println("1 OF 10W ON");
         break;
 
         case 2:
-        PORTD = (PORTD | 0xF0)& B01111111; 
-        PORTG = (PORTG | 0x0F)& B11111011; 
-//        PORTD &= B01111111; //38 ON
-//        PORTG &= B11111011; //39 ON
+//        PORTD = (PORTD | 0xF0)& B01111111; 
+//        PORTG = (PORTG | 0x0F)& B11111011; 
+        PORTD = (PORTD & 0x0F)| B10000000; 
+        PORTG = (PORTG & 0xF0)| B00000100; 
         Serial.println("2 OF 10W ON");
         break;
 
         case 3:
-        PORTD = (PORTD | 0xF0)& B01111111; 
-        PORTG = (PORTG | 0x0F)& B11111001;
-//        PORTD &= B01111111; //38 ON
-//        PORTG &= B11111001; //39,40 ON
+//        PORTD = (PORTD | 0xF0)& B01111111; 
+//        PORTG = (PORTG | 0x0F)& B11111001;
+        PORTD = (PORTD & 0x0F)& B10000000; 
+        PORTG = (PORTG & 0xF0)& B00000110;
         Serial.println("3 OF 10W ON");
         break;
 
         case 4:
-        PORTD = (PORTD | 0xF0)& B01111111; 
-        PORTG = (PORTG | 0x0F)& B11111000;
-//        PORTD &= B01111111; //38 ON
-//        PORTG &= B11111000; //39,40,41 ON
+//        PORTD = (PORTD | 0xF0)& B01111111; 
+//        PORTG = (PORTG | 0x0F)& B11111000;
+        PORTD = (PORTD & 0x0F)| B10000000; 
+        PORTG = (PORTG & 0xF0)| B00000111;
         Serial.println("4 OF 10W ON");
         break;
 
         default:
-        PORTD |= B11110000;
-        PORTG |= B00001111;
+//        PORTD |= B11110000;
+//        PORTG |= B00001111;
+        PORTD &= B00001111;
+        PORTG &= B11110000;
         break;
         }
     }
@@ -591,7 +597,7 @@ char _GenStr[_Seq][5]={0};
             ExecuteKey_start = false;
             _state = 0;
             for(unsigned int pin = 22; pin < 42; pin ++){
-              digitalWrite(pin, HIGH);
+              digitalWrite(pin, LOW);
             }
             asm volatile ( "jmp 0");
             return;
