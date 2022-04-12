@@ -373,24 +373,24 @@ char _GenStr[_Seq][5]={0};
         {
         case 1: 
 //        PORTA = (PORTA | 0x0F)& B11111110;
-        PORTA = (PORTA & 0xF0)| B00000001;
-        Serial.println("1 OF 1000W ON");
+        PORTA = (PORTA & 0xF0)| B00000001; 
+        Serial.println("1 OF 1000W ON"); //22
         break;
 
         case 2:
 //        PORTA = (PORTA | 0x0F)& B11111100;
-        PORTA = (PORTA & 0xF0)| B00000011;
-        Serial.println("2 OF 1000W ON");
+        PORTA = (PORTA & 0xF0)| B00000011; //22,23
+        Serial.println("2 OF 1000W ON"); 
         break;
 
         case 3:
 //        PORTA = (PORTA | 0x0F)& B11111000;
-        PORTA = (PORTA & 0xF0)| B00000111;
+        PORTA = (PORTA & 0xF0)| B00000111; //22,23,24
         Serial.println("3 OF 1000W");
         break;
 
         case 4:
-//        PORTA = (PORTA | 0x0F)& B11110000;
+//        PORTA = (PORTA | 0x0F)& B11110000; //22,23,24,25
         PORTA = (PORTA & 0xF0)| B00001111;
         Serial.println("4 OF 1000W");
         break;
@@ -410,25 +410,25 @@ char _GenStr[_Seq][5]={0};
         {
         case 1: 
 //        PORTA = (PORTA | 0xF0)& B11101111;
-        PORTA = (PORTA & 0x0F)| B00010000;  
+        PORTA = (PORTA & 0x0F)| B00010000;  //26
         Serial.println("1 OF 200W ON");
         break;
 
         case 2:
-//        PORTA = (PORTA | 0xF0)& B11001111;
-        PORTA = (PORTA & 0x0F)| B00110000;
+//        PORTA = (PORTA | 0xF0)& B11001111; 
+        PORTA = (PORTA & 0x0F)| B00110000; //26,27
         Serial.println("2 OF 200W ON");
         break;
 
         case 3:
 //        PORTA = (PORTA | 0xF0)& B10001111;
-        PORTA = (PORTA & 0x0F)| B01110000;
+        PORTA = (PORTA & 0x0F)| B01110000; //26,27,28
         Serial.println("3 OF 200W ON");
         break;
 
         case 4:
 //        PORTA = (PORTA | 0xF0)& B00001111;
-        PORTA = (PORTA & 0x0F)| B11110000;
+        PORTA = (PORTA & 0x0F)| B11110000; //26,27,28,29
         Serial.println("4 OF 200W ON");
         break;
 
@@ -438,74 +438,35 @@ char _GenStr[_Seq][5]={0};
         break;
         }
     }
-    
-//    if(_NumberOfRelays >= 40)
-    {     
-        _load40 = _NumberOfRelays /40;
+
+  //    if(_NumberOfRelays >= 40)
+    {   
+        _load40 = _NumberOfRelays/40;
         _NumberOfRelays -= _load40 * 40;
         switch(_load40)
         {
         case 1: 
-        {
-//        PORTC = (PORTC | 0x0F)& B11111110;
-          PORTC = (PORTC & 0xF0)| B00000001;
-        Serial.println("1 OF 40W ON");
-        }
-        break;
-        
-        case 2:
-//      PORTC = (PORTC | 0x0F)& B11111100;
-        PORTC = (PORTC & 0xF0)| B00000011;        
-        Serial.println("2 OF 40W ON");
-        break;
-
-        case 3:
-//        PORTC = (PORTC | 0x0F)& B11111000; 
-        PORTC = (PORTC & 0x0F)| B00000111;
-        Serial.println("3 OF 40W ON");
-        break;
-
-        case 4:
-//        PORTC = (PORTC | 0x0F)& B11110000; 
-        PORTC = (PORTC & 0x0F)| B00001111; 
-        Serial.println("4 OF 40W ON");
-        break;
-
-        default:
-//        PORTC |= B00001111;
-        PORTC &= B11110000;
-        break;
-      }
-    }
-    
-//    if(_NumberOfRelays >= 20)
-    {   
-        _load20 = _NumberOfRelays/20;
-        _NumberOfRelays -= _load20 * 20;
-        switch(_load20)
-        {
-        case 1: 
 //        PORTC = (PORTC | 0xF0)& B11101111;
-        PORTC = (PORTC & 0xF0)| B00010000;
-        Serial.println("1 OF 20W ON");
+        PORTC = (PORTC & 0xF0)| B10000000; //30
+        Serial.println("1 OF 40W ON");
         break;
 
         case 2:
 //        PORTC = (PORTC | 0xF0)& B11001111;
-        PORTC = (PORTC & 0xF0)| B00110000;
-        Serial.println("2 OF 20W ON");
+        PORTC = (PORTC & 0xF0)| B11000000;  //30,31
+        Serial.println("2 OF 40W ON");
         break;
 
         case 3:
 //        PORTC = (PORTC | 0xF0)& B10001111;
-        PORTC = (PORTC & 0xF0)| B01110000;
-        Serial.println("3 OF 20W ON");
+        PORTC = (PORTC & 0xF0)| B11100000;  //30,31,32
+        Serial.println("3 OF 40W ON");
         break;
 
         case 4:
 //        PORTC = (PORTC | 0xF0)& B00001111;
-        PORTC = (PORTC & 0xF0)| B11110000;
-        Serial.println("4 OF 20W ON");
+        PORTC = (PORTC & 0xF0)| B11110000; //30,31,32,33
+        Serial.println("4 OF 40W ON");
         break;
 
         default:
@@ -515,7 +476,46 @@ char _GenStr[_Seq][5]={0};
         }
         
     }
-   
+    
+//    if(_NumberOfRelays >= 20)
+    {     
+        _load20 = _NumberOfRelays /20;
+        _NumberOfRelays -= _load20 * 20;
+        switch(_load20)
+        {
+        case 1: 
+        {
+//        PORTC = (PORTC | 0x0F)& B11111110;
+          PORTC = (PORTC & 0xF0)| B00001000; //34
+        Serial.println("1 OF 20W ON");
+        }
+        break;
+        
+        case 2:
+//      PORTC = (PORTC | 0x0F)& B11111100;
+        PORTC = (PORTC & 0xF0)| B00001100; //34,35      
+        Serial.println("2 OF 20W ON");
+        break;
+
+        case 3:
+//        PORTC = (PORTC | 0x0F)& B11111000; 
+        PORTC = (PORTC & 0x0F)| B00001110; //34,35,36
+        Serial.println("3 OF 20W ON");
+        break;
+
+        case 4:
+//        PORTC = (PORTC | 0x0F)& B11110000; 
+        PORTC = (PORTC & 0x0F)| B00001111; //34,35,36,37
+        Serial.println("4 OF 20W ON");
+        break;
+
+        default:
+//        PORTC |= B00001111;
+        PORTC &= B11110000;
+        break;
+      }
+    }
+       
 //    if(_NumberOfRelays >= 10)
     {   
         load10 = _NumberOfRelays/10;
@@ -525,30 +525,30 @@ char _GenStr[_Seq][5]={0};
         case 1:
 //        PORTD = (PORTD | 0xF0)& B01111111;
         PORTD = (PORTD & 0x0F)| B10000000; 
-        Serial.println("1 OF 10W ON");
+        Serial.println("1 OF 10W ON"); //38
         break;
 
         case 2:
 //        PORTD = (PORTD | 0xF0)& B01111111; 
 //        PORTG = (PORTG | 0x0F)& B11111011; 
-        PORTD = (PORTD & 0x0F)| B10000000; 
-        PORTG = (PORTG & 0xF0)| B00000100; 
+        PORTD = (PORTD & 0x0F)| B10000000; //38
+        PORTG = (PORTG & 0xF0)| B00000100; //39
         Serial.println("2 OF 10W ON");
         break;
 
         case 3:
 //        PORTD = (PORTD | 0xF0)& B01111111; 
 //        PORTG = (PORTG | 0x0F)& B11111001;
-        PORTD = (PORTD & 0x0F)& B10000000; 
-        PORTG = (PORTG & 0xF0)& B00000110;
+        PORTD = (PORTD & 0x0F)& B10000000; //38
+        PORTG = (PORTG & 0xF0)& B00000110; //39,40
         Serial.println("3 OF 10W ON");
         break;
 
         case 4:
 //        PORTD = (PORTD | 0xF0)& B01111111; 
 //        PORTG = (PORTG | 0x0F)& B11111000;
-        PORTD = (PORTD & 0x0F)| B10000000; 
-        PORTG = (PORTG & 0xF0)| B00000111;
+        PORTD = (PORTD & 0x0F)| B10000000; //38
+        PORTG = (PORTG & 0xF0)| B00000111; //39,40,41
         Serial.println("4 OF 10W ON");
         break;
 
